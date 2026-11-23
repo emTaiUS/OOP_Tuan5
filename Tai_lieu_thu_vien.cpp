@@ -37,12 +37,13 @@ int TaiLieu::tuoi(int namHienTai) const {
 }
 
 long long TaiLieu::phiMuon(int soNgay)const {
-    return 1000*soNgay;
+    return 1000*(long long)soNgay;
 }
 
 void TaiLieu:: xuat()const {
-    
+    cout <<maSo<<" | "<<tieuDe<<" | "<<namXuatBan<<'\n';
 }
+
 class Sach : public TaiLieu {
     protected:
         std::string tacGia;
@@ -55,6 +56,27 @@ class Sach : public TaiLieu {
         long long phiMuon(int soNgay) const;
         void xuat() const;
 };
+
+Sach::Sach(const std::string& maSo, const std::string& tieuDe, int namXuatBan,
+            const std::string& tacGia, int soTrang): TaiLieu(maSo,tieuDe,namXuatBan),tacGia(tacGia),soTrang(soTrang){};
+
+std::string Sach:: getTacGia() const {
+    return tacGia;
+}
+
+int Sach :: getSoTrang() const {
+    return soTrang;
+}
+
+long long Sach:: phiMuon(int soNgay) const {
+    return TaiLieu::phiMuon(soNgay)+(long long)soNgay*soTrang*10;
+}
+
+void Sach::xuat() const {
+    TaiLieu::xuat();
+    cout <<tacGia<<" | "<<soTrang<<'\n';
+}
+
 
 class TapChi : public TaiLieu {
     protected:
@@ -69,13 +91,24 @@ class TapChi : public TaiLieu {
         void xuat() const;
 };
 
+TapChi :: TapChi(const std:: string &maSo,const std::string&tieuDe,int namXuatBan,int soPhatHanh,int thang)
+    :TaiLieu(maSo,tieuDe,namXuatBan),soPhatHanh(soPhatHanh),thang(thang){};
 
+int TapChi::getSoPhatHanh() const {
+    return soPhatHanh;
+}
 
+int TapChi::getThang() const {
+    return thang;
+}
 
-int main(){
+long long TapChi::phiMuon(int soNgay) const {
+    long long price= TaiLieu::phiMuon(soNgay);
+    if(2026-namXuatBan>5) return price/2;
+    else return price;
+}
 
-
-
-
-    return 0;
+void TapChi::xuat()const {
+    TaiLieu::xuat();
+    cout <<soPhatHanh<<" | "<<thang<<'\n';
 }
